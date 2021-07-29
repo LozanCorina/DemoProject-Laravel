@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <head>
-<title>UniSoft</title>
+<title>Unisim-Soft</title>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <link rel="shortcut icon" type="image/x-icon" href="{{ asset('front_assets/images/icon1')}}">
 
@@ -181,7 +181,7 @@
 			<div class="col-sm-6">
 				<p class="text-md-right text-white-50">
 	Copyright &copy  <br>
-<a href="https://una.md/ro" class="text-white-50">UniSoft societate comercial&#259;</a>
+<a href="http://unisim-soft.una.md" class="text-white-50">Unisim-Soft societate comercial&#259;</a>
 				</p>
 			</div>
 		</section> <!-- //footer-top -->

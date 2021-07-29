@@ -7,7 +7,7 @@ namespace App\Charts;
 use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\BaseChart;
 use Illuminate\Http\Request;
-use App\Models\Task;
+use App\Models\Project;
 
 class SampleChart extends BaseChart
 {
@@ -18,13 +18,29 @@ class SampleChart extends BaseChart
      */
     public function handler(Request $request): Chartisan
     {
-        $task=Task::select('name')->pluck('name');
+        
+        $data1 = '';
+        $data2 = '';
+
+        //$projects=Project::pluck('name');
+
+        $totalY=retunrTotalY();
+        $totalN=retunrTotalN();
+
+        foreach ($totalY as $key => $value) {
+            $data1 = $data1 .''.$value.',';
+        }
+        foreach ($totalN as $key => $value) {
+            $data2 = $data2 .''.$value.',';
+        }
+        $data1 = trim($data1,",");      
+        $data2 = trim($data2,",");
 
         return Chartisan::build()
-            ->labels(['Tasks'])
-            ->dataset('Train Developers on Application Express', [5,1])
-            ->dataset('Configure APEX Environment', [5,1])
-            ->dataset('Migrate .Net Applications', [7,2]);
+            ->labels(['Tasks'])  
+             ->dataset('Train Developers on Application Express', [$data1])
+            ->dataset('Configure APEX Environment', [$data2]);
+        
             // ->labels(['First', 'Second', 'Third'])
             // ->dataset('Completed', [1, 2, 3])
             // ->dataset('Incompleted', [3, 2, 1]);
