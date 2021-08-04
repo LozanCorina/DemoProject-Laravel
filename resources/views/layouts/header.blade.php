@@ -51,7 +51,7 @@
 	<nav class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top">
 	<div class="container">
 	<div class="row" style="width:100%;">
-		<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+		<div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -85,7 +85,7 @@
 						<a  class="nav-link" href="{{route('connection')}}" class="btn btn-primary btn-block"> DB connection </a>
 						</li>
 						<li class="nav-item">
-						<a  class="nav-link" href="{{'\chart'}}" class="btn btn-primary btn-block"> Chart </a>
+						<a  class="nav-link" href="{{route('mysql.work')}}" class="btn btn-primary btn-block"> Sql worksheet </a>
 						</li>
 					</ul>
 				</div>

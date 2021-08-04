@@ -65,7 +65,7 @@
 						<a class="nav-link" href="http://unisim-soft.una.md/about-us.html"> About us </a>
 						</li>
 						<li class="nav-item">
-						<a  class="nav-link" href="{{route('connection')}}" class="btn btn-primary btn-block"> DataBase Connection </a>
+						<a  class="nav-link" href="{{route('connection')}}" class="btn btn-primary btn-block"> DB Connection </a>
 						</li>
 					</ul>
 				</div>

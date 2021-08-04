@@ -31,7 +31,7 @@ class DataController extends Controller
         return view('milestones',compact(['mile']));
     }
     public function index(){
-       
+
         return view('statment');
     }
     //team
@@ -61,7 +61,7 @@ class DataController extends Controller
     }
     public function update_project(Request $request){
         $pro  = Project::find($request->id);
-        $pro->fill($request->all())->save();    
+        $pro->fill($request->all())->save();
         return redirect()->route('projects')->with('success_message','Updated with succes!');
     }
     //task
@@ -75,7 +75,7 @@ class DataController extends Controller
     }
     public function update_task(Request $request){
         $t  = Task::find($request->id);
-        $t->fill($request->all())->save();    
+        $t->fill($request->all())->save();
         return redirect()->route('tasks')->with('success_message','Updated with succes!');
     }
     //mile
@@ -89,7 +89,7 @@ class DataController extends Controller
     }
     public function update_mile(Request $request){
         $t  = Milestone::find($request->id);
-        $t->fill($request->all())->save();    
+        $t->fill($request->all())->save();
         return redirect()->route('milestones')->with('success_message','Updated with succes!');
     }
     //update
@@ -111,9 +111,19 @@ class DataController extends Controller
         $d=Milestone::find($request->id);
         return view('update_milestone',compact(['d']));
       }
-
- 
        // return redirect()->back()->with('success_message','Updated!');
-       
+
+    }
+
+    public function worksheet(Request $request)
+    {
+       $data= DB::select($request->code);
+        //json_decode(json_encode($data), true);
+//       foreach ($data as $key=>$value)
+//       {
+//           echo $value.'<br>';
+//       }
+        //var_dump($data) ;
+        return view('sqlResult',compact('data'));
     }
 }
