@@ -76,17 +76,24 @@
 							</ul>
 						</li>
 						<li class="nav-item">
-						<a  class="nav-link" href="{{route('crud')}}" class="btn btn-primary btn-block"> CRUD </a>
+						    <a  class="nav-link" href="{{route('crud')}}" class="btn btn-primary btn-block"> CRUD </a>
 						</li>
 						<li class="nav-item">
-						<a  class="nav-link" href="{{route('calendar')}}" class="btn btn-primary btn-block"> Calendar </a>
+						    <a  class="nav-link" href="{{route('calendar')}}" class="btn btn-primary btn-block"> Calendar </a>
+						</li>
+                        <li class="nav-item">
+						    <a  class="nav-link" href="{{('/chart')}}" class="btn btn-primary btn-block"> Chart </a>
 						</li>
 						<li class="nav-item">
-						<a  class="nav-link" href="{{route('connection')}}" class="btn btn-primary btn-block"> DB connection </a>
+						    <a  class="nav-link" href="{{route('connection')}}" class="btn btn-primary btn-block"> DB connection </a>
 						</li>
-						<li class="nav-item">
-						<a  class="nav-link" href="{{route('mysql.work')}}" class="btn btn-primary btn-block"> Sql worksheet </a>
-						</li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">  SQL </a>
+                            <ul class="dropdown-menu">
+                                <li> <a  class="dropdown-item text-primary" href="{{route('mysql.work')}}" class="btn btn-primary btn-block">worksheet </a></li>
+                            </ul>
+                        </li>
 					</ul>
 				</div>
 

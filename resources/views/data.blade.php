@@ -5,7 +5,17 @@
             <div class="col-md-8">
                 <p>Tabelele disponibile:</p>
                 <table class="table table-striped">
-{{--                    <p>{{$stid}}</p>--}}
+                    <thead>
+                    <tr>
+                        @php
+                            $ncols = oci_num_fields($stid);
+                                for ($i = 1; $i <= $ncols; $i++) {
+                                    $column_name  = oci_field_name($stid, $i);
+                                    echo "<td>$column_name</td>";
+                                    }
+                        @endphp
+                    </tr>
+                    </thead>
                     <tbody>
                     <?php
                     while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {

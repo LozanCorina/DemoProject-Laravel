@@ -19,7 +19,21 @@ class OracleController extends Controller
             $conn = connection();
             $stid = oci_parse($conn, $request->code);
             oci_execute($stid);
-            return view('oracle.worksheet_result',compact(['stid','conn']));
+            $ncols = oci_num_fields($stid);
+            return view('oracle.worksheet_result',compact(['stid','conn','ncols']));
+    }
+    public function obiectBrowse()
+    {
+        $conn =  connection();
+        if (!$conn) {
+            $e = oci_error();
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        } else {
+            $stid = oci_parse($conn, 'SELECT table_name FROM USER_TABLES');
+            oci_execute($stid);
+
+            return view('data', compact(['conn', 'stid']));
+        }
     }
     public function chart()
     {

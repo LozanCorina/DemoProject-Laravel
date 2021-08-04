@@ -87,8 +87,12 @@
                             <li class="nav-item">
                                 <a  class="nav-link" href="{{'\chartOracle'}}" class="btn btn-primary btn-block"> Chart </a>
                             </li>
-                            <li class="nav-item">
-                                <a  class="nav-link" href="{{route('worksheet')}}" class="btn btn-primary btn-block"> Sql worksheet </a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">  SQL </a>
+                                <ul class="dropdown-menu">
+                                   <li> <a  class="dropdown-item text-primary" href="{{route('worksheet')}}" class="btn btn-primary btn-block">worksheet </a></li>
+                                   <li> <a  class="dropdown-item text-primary" href="{{route('obiect.browser')}}" class="btn btn-primary btn-block">object browser </a></li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

@@ -30,6 +30,7 @@ Route::get('/worksheet', function () {
 
 Route::post('/worksheet-exe','OracleController@worksheet')->name('worksheet.code');
 Route::post('/worksheet-mysql','DataController@worksheet')->name('worksheet.sql');
+Route::get('/object-browser','OracleController@obiectBrowse')->name('obiect.browser');
 Route::get('/insert','StatmentController@insertRowsPrj1')->name('insert');
 Route::get('/insert2','StatmentController@insertRowsMilestone')->name('insertPrj2');
 //calendar test

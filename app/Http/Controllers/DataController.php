@@ -118,6 +118,7 @@ class DataController extends Controller
     public function worksheet(Request $request)
     {
        $data= DB::select($request->code);
+      //  $data= mysql_query($request->code);
         //json_decode(json_encode($data), true);
 //       foreach ($data as $key=>$value)
 //       {
