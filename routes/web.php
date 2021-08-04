@@ -14,11 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 })->name('home');
 
+Route::get('/connection','ConnectionController@index')->name('connection');
+Route::post('/set-conn','ConnectionController@set')->name('set.conn');
 Route::get('/test','ChartController@test');
 Route::get('/chart','ChartController@index');
+Route::get('/chartOracle','OracleController@chart');
+Route::get('/worksheet', function () {
+    return view('oracle.worksheet');})->name('worksheet');
+
+Route::post('/worksheet-exe','OracleController@worksheet')->name('worksheet.code');
 Route::get('/insert','StatmentController@insertRowsPrj1')->name('insert');
 Route::get('/insert2','StatmentController@insertRowsMilestone')->name('insertPrj2');
 //calendar test
@@ -38,7 +45,7 @@ Route::get('/show-prj','DataController@projects')->name('projects');
 Route::post('/store-project','DataController@store_project')->name('store.project');
 Route::post('/detele-project/{id}','DataController@delete_project')->name('project.destroy');
 Route::post('/update-project','DataController@update_project')->name('project.update');
-//crud tasks 
+//crud tasks
 Route::get('/show-tasks','DataController@tasks')->name('tasks');
 Route::post('/store-task','DataController@store_task')->name('store.task');
 Route::post('/detele-task/{id}','DataController@delete_task')->name('task.destroy');
@@ -48,8 +55,22 @@ Route::get('/show-mile','DataController@milestones')->name('milestones');
 Route::post('/store-milestone','DataController@store_mile')->name('store.milestone');
 Route::post('/detele-milestone/{id}','DataController@delete_mile')->name('mile.destroy');
 Route::post('/update-mile','DataController@update_mile')->name('update.mile');
-
-//test connection with oracle 
+//oracle crud proj
+Route::get('/projects','OracleController@projects')->name('projects.o');
+Route::post('/del-project/{id}','OracleController@delete_project')->name('project.o.destroy');
+//teams
+Route::get('/teams','OracleController@teams')->name('team.o');
+Route::post('/del-teams/{id}','OracleController@destroy')->name('team.o.destroy');
+//mile
+Route::get('/milestones','OracleController@mile')->name('milestones.o');
+Route::post('/del-mile/{id}','OracleController@del_mile')->name('mile.o.destroy');
+//tasks
+Route::get('/tasks','OracleController@tasks')->name('tasks.o');
+Route::post('/del-task/{id}','OracleController@del_task')->name('task.o.destroy');
+//test connection with oracle
 //Route::get('/test','OracleController@index')->name('test');
 //update data
 Route::post('/update/{model}','DataController@update')->name('update');
+Route::post('/update-data/{model}','OracleController@updateData')->name('update_data');
+Route::post('/data/{table}','OracleController@data')->name('data');
+

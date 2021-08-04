@@ -64,28 +64,8 @@
 						<li class="nav-item">
 						<a class="nav-link" href="http://unisim-soft.una.md/about-us.html"> About us </a>
 						</li>
-
-						<li class="nav-item dropdown">
-							<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">  Data </a>
-
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item text-primary" href="{{route('projects')}}"> Projects</a></li>
-								<li><a class="dropdown-item text-primary" href="{{route('tasks')}}"> Tasks </a></li>
-								<li><a class="dropdown-item text-primary" href="{{route('team')}}"> Team members </a></li>
-								<li><a class="dropdown-item text-primary" href="{{route('milestones')}}"> Milestones </a></li>
-							</ul>
-						</li>
 						<li class="nav-item">
-						<a  class="nav-link" href="{{route('crud')}}" class="btn btn-primary btn-block"> CRUD </a>
-						</li>
-						<li class="nav-item">
-						<a  class="nav-link" href="{{route('calendar')}}" class="btn btn-primary btn-block"> Calendar </a>
-						</li>
-						<li class="nav-item">
-						<a  class="nav-link" href="{{route('connection')}}" class="btn btn-primary btn-block"> DB connection </a>
-						</li>
-						<li class="nav-item">
-						<a  class="nav-link" href="{{'\chart'}}" class="btn btn-primary btn-block"> Chart </a>
+						<a  class="nav-link" href="{{route('connection')}}" class="btn btn-primary btn-block"> DataBase Connection </a>
 						</li>
 					</ul>
 				</div>
@@ -100,7 +80,7 @@
 	<div class="col-md-4">
 	<div class="brand-wrap">
 		<img  src="{{asset('front_assets/images/icon1.png')}}" style=" border-radius: 50%; height: 70px;">
-		<h2 class="logo-text font-weight-bold text-secondary">Uni Soft</h2>
+		<h2 class="logo-text font-weight-bold text-secondary">Unisim Soft</h2>
 	</div> <!-- brand-wrap.// -->
 	</div>
 	<div class="col-md-4">
@@ -123,39 +103,38 @@
 	</div> <!-- container.// -->
 </section> <!-- header-main .// -->
 </header> <!-- section-header.// -->
-
 @yield('content')
-    <!-- ========================= FOOTER ========================= -->
-    <footer class="section-footer bg-primary">
-        <div class="container">
-            <section class="footer-top padding-top">
-                <div class="row">
-                    <aside class="col-sm-3">
-                        <article class="white">
-                            <h5 class="title">Contacte</h5>
-                            <div class="btn-group white">
-                                <a class="btn btn-facebook" title="Facebook" target="_blank" href="#"><i class="fab fa-facebook-f  fa-fw"></i></a>
-                                <a class="btn btn-instagram" title="Instagram" target="_blank" href="#"><i class="fab fa-instagram  fa-fw"></i></a>
-                                <a class="btn btn-youtube" title="Youtube" target="_blank" href="#"><i class="fab fa-youtube  fa-fw"></i></a>
-                                <a class="btn btn-twitter" title="Twitter" target="_blank" href="#"><i class="fab fa-twitter  fa-fw"></i></a>
-                            </div>
-                        </article>
-                    </aside>
-                </div> <!-- row.// -->
-                <br>
-            </section>
-            <section class="footer-bottom row border-top-white">
-                <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                    <p class="text-md-right text-white-50">
-                        Copyright &copy  <br>
-                        <a href="http://unisim-soft.una.md" class="text-white-50">Unisim-Soft societate comercial&#259;</a>
-                    </p>
-                </div>
-            </section> <!-- //footer-top -->
-        </div><!-- //container -->
-    </footer>
-    <!-- ========================= FOOTER END // ========================= -->
+<!-- ========================= FOOTER ========================= -->
+<footer class="section-footer bg-primary">
+	<div class="container">
+		<section class="footer-top padding-top">
+			<div class="row">
+				<aside class="col-sm-3">
+					<article class="white">
+						<h5 class="title">Contacte</h5>
+						 <div class="btn-group white">
+						    <a class="btn btn-facebook" title="Facebook" target="_blank" href="#"><i class="fab fa-facebook-f  fa-fw"></i></a>
+						    <a class="btn btn-instagram" title="Instagram" target="_blank" href="#"><i class="fab fa-instagram  fa-fw"></i></a>
+						    <a class="btn btn-youtube" title="Youtube" target="_blank" href="#"><i class="fab fa-youtube  fa-fw"></i></a>
+						    <a class="btn btn-twitter" title="Twitter" target="_blank" href="#"><i class="fab fa-twitter  fa-fw"></i></a>
+						</div>
+					</article>
+				</aside>
+			</div> <!-- row.// -->
+			<br>
+		</section>
+		<section class="footer-bottom row border-top-white">
+			<div class="col-sm-6">
+			</div>
+			<div class="col-sm-6">
+				<p class="text-md-right text-white-50">
+	Copyright &copy  <br>
+<a href="http://unisim-soft.una.md" class="text-white-50">Unisim-Soft societate comercial&#259;</a>
+				</p>
+			</div>
+		</section> <!-- //footer-top -->
+	</div><!-- //container -->
+</footer>
+<!-- ========================= FOOTER END // ========================= -->
 </body>
 </html>
