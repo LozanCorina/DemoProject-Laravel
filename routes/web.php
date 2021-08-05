@@ -25,11 +25,10 @@ Route::post('/set-conn','ConnectionController@set')->name('set.conn');
 Route::get('/test','ChartController@test');
 Route::get('/chart','ChartController@index');
 Route::get('/chartOracle','OracleController@chart');
-Route::get('/worksheet', function () {
-    return view('oracle.worksheet');})->name('worksheet');
+//oracle worksheet
+Route::match(array('get','post'),'/worksheet','OracleController@worksheet')->name('worksheet');
 
-Route::post('/worksheet-exe','OracleController@worksheet')->name('worksheet.code');
-Route::post('/worksheet-mysql','DataController@worksheet')->name('worksheet.sql');
+Route::match(array('get','post'),'/worksheet-mysql','DataController@worksheet')->name('worksheet.sql');
 Route::get('/object-browser','OracleController@obiectBrowse')->name('obiect.browser');
 Route::get('/insert','StatmentController@insertRowsPrj1')->name('insert');
 Route::get('/insert2','StatmentController@insertRowsMilestone')->name('insertPrj2');

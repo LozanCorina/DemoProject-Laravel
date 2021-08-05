@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Models\Milestone;
 use App\Models\Team;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\PDO;
 class DataController extends Controller
 {
     public function projects(){
@@ -117,7 +118,24 @@ class DataController extends Controller
 
     public function worksheet(Request $request)
     {
-       $data= DB::select($request->code);
+        if($request->isMethod('get'))
+        {
+            return view('sqlWork');
+        }
+        else if($request->isMethod('post')) {
+           // DB::setFetchMode(\PDO::FETCH_ASSOC);
+            $data= DB::select($request->code);
+            //$data= DB::select(DB::raw($request->code));
+//            $data = json_decode(json_encode($data)); //it will return you stdclass object
+//            $data = json_decode(json_encode($data),true);
+//            foreach ($data as $key=>$value)
+//            {
+//               echo $value.'<br>';
+//            }
+            //var_dump($data);
+            return view('sqlResult',compact('data'));
+        }
+
       //  $data= mysql_query($request->code);
         //json_decode(json_encode($data), true);
 //       foreach ($data as $key=>$value)
@@ -125,6 +143,6 @@ class DataController extends Controller
 //           echo $value.'<br>';
 //       }
         //var_dump($data) ;
-        return view('sqlResult',compact('data'));
+
     }
 }

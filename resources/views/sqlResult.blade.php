@@ -25,10 +25,9 @@
                 <div class="card col-xl-12">
                     <table class="table table-striped">
                         <tbody>
-                        @foreach($data as $p)
+                        @foreach($data as $d)
                             <tr>
-                                <td>{{$p->name}}</td>
-                                <td>{{$p->description}}</td>
+                                <td>{{$d->name}}</td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -16,11 +16,28 @@ class OracleController extends Controller
         // }
     }
     public function worksheet(Request $request){
+        if($request->isMethod('get'))
+        {
+            $num_rows= 0;
+            $data='';
+            $conn = connection();
+            $stid = oci_parse($conn, 'select 0 from dual');
+            oci_execute($stid);
+            $ncols = oci_num_fields($stid);
+
+
+            return view('oracle.worksheet',compact(['data','stid','conn','ncols','num_rows']));
+        }else if ($request->isMethod('post')){
+            $data=$request->code;
             $conn = connection();
             $stid = oci_parse($conn, $request->code);
             oci_execute($stid);
             $ncols = oci_num_fields($stid);
-            return view('oracle.worksheet_result',compact(['stid','conn','ncols']));
+            $num_rows=oci_num_rows($stid);
+           // echo $num_rows;
+            return view('oracle.worksheet',compact(['data','stid','conn','ncols','num_rows']));
+        }
+
     }
     public function obiectBrowse()
     {
