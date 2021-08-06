@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 })->name('home');
-//mysql
-Route::get('/mysql-worksheet', function () {
-    return view('sqlWork');})->name('mysql.work');
+
 
 Route::get('/connection','ConnectionController@index')->name('connection');
 Route::post('/set-conn','ConnectionController@set')->name('set.conn');
@@ -27,7 +25,7 @@ Route::get('/chart','ChartController@index');
 Route::get('/chartOracle','OracleController@chart');
 //oracle worksheet
 Route::match(array('get','post'),'/worksheet','OracleController@worksheet')->name('worksheet');
-
+//mysql worksheet
 Route::match(array('get','post'),'/worksheet-mysql','DataController@worksheet')->name('worksheet.sql');
 Route::get('/object-browser','OracleController@obiectBrowse')->name('obiect.browser');
 Route::get('/insert','StatmentController@insertRowsPrj1')->name('insert');

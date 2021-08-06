@@ -118,31 +118,28 @@ class DataController extends Controller
 
     public function worksheet(Request $request)
     {
-        if($request->isMethod('get'))
-        {
-            return view('sqlWork');
+        if($request->isMethod('get')) {
+            $query='';
+            $data=null;
+            $columns=null;
+
+            return view('sqlWork',compact('data','query','columns'));
         }
         else if($request->isMethod('post')) {
-           // DB::setFetchMode(\PDO::FETCH_ASSOC);
-            $data= DB::select($request->code);
-            //$data= DB::select(DB::raw($request->code));
-//            $data = json_decode(json_encode($data)); //it will return you stdclass object
-//            $data = json_decode(json_encode($data),true);
-//            foreach ($data as $key=>$value)
-//            {
-//               echo $value.'<br>';
-//            }
-            //var_dump($data);
-            return view('sqlResult',compact('data'));
+
+            $query=$request->code;
+            $data= DB::select(DB::raw($request->code));
+
+            //get columns
+            $db = DB::connection()->getPdo();
+            $rs = $db->query($request->code);
+            for ($i = 0; $i < $rs->columnCount(); $i++) {
+                $col = $rs->getColumnMeta($i);
+                $columns[] = $col['name'];
+            }
+            return view('sqlWork',compact('data','query','columns'));
         }
 
-      //  $data= mysql_query($request->code);
-        //json_decode(json_encode($data), true);
-//       foreach ($data as $key=>$value)
-//       {
-//           echo $value.'<br>';
-//       }
-        //var_dump($data) ;
 
     }
 }

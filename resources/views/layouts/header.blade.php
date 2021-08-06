@@ -91,7 +91,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">  SQL </a>
                             <ul class="dropdown-menu">
-                                <li> <a  class="dropdown-item text-primary" href="{{route('mysql.work')}}" class="btn btn-primary btn-block">worksheet </a></li>
+                                <li> <a  class="dropdown-item text-primary" href="{{route('worksheet.sql')}}" class="btn btn-primary btn-block">worksheet </a></li>
                             </ul>
                         </li>
 					</ul>
