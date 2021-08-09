@@ -56,6 +56,14 @@
             </div>
         </div>
     @endif
+    @if($message=Session::get('success_message'))
+        <div class="col-3  mx-auto my-2">
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                <strong>{{$message}}</strong>
+            </div>
+        </div>
+    @endif
     <div class="container my-2">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -78,7 +86,7 @@
                     <label>User Info</label>
                     <div class="form-group">
                         <label>Username</label>
-                        <input name="username" class="form-control" placeholder="Username" type="text">
+                        <input name="username" class="form-control" placeholder="root" type="text" value="root" required>
                     </div> <!-- form-group// -->
                     <div class="form-group">
                         <label>Password</label>
@@ -86,7 +94,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                             </div>
-                            <input name="password" class="form-control" placeholder="******" type="password">
+                            <input name="password" class="form-control" placeholder="******" value="" type="password">
                         </div> <!-- input-group.// -->
                     </div> <!-- form-group// -->
                 </div> <!-- form-user// -->
@@ -94,15 +102,15 @@
                     <label>Connection data</label>
                     <div class="form-group">
                         <label>Server</label>
-                        <input name="server" class="form-control" placeholder="localhost" type="text">
+                        <input name="host" class="form-control" placeholder="127.0.0.1" type="text" value="127.0.0.1" required>
                     </div> <!-- form-group// -->
                     <div class="form-group">
                         <label>Port</label>
-                        <input name="port" class="form-control" placeholder="3307" type="text">
+                        <input name="port" class="form-control" placeholder="3307" type="text" value="3307" required>
                     </div> <!-- form-group// -->
                     <div class="form-group">
                         <label>Database</label>
-                        <input name="db" class="form-control" placeholder="" type="text">
+                        <input name="db" class="form-control" placeholder="" value= "unism" type="text" required>
                     </div> <!-- form-group// -->
                 </div> <!-- form-conn// -->
                 <div class="form-group my-1">

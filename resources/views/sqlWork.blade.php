@@ -52,7 +52,7 @@
                                 @endif
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody>0
                             @if($data != null)
                             @foreach($data as $d)
                                 <tr>

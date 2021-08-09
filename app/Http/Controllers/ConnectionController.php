@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Mockery\Exception;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ConnectionRequest;
-use function GuzzleHttp\json_decode;
+use App;
 
 class ConnectionController extends Controller
 {
@@ -37,15 +37,43 @@ class ConnectionController extends Controller
         $username=$request->username;
         if($request->db_type =='mysql')
         {
+            if($request->username != config('global.username'))
+            {
+                return redirect()->route('connection')->with('success_message','Username is incorrect!');
+            }
+            else if($request->password != config('global.password'))
+            {
+                return redirect()->route('connection')->with('success_message','Password is incorrect!');
+            }
+            else if($request->host != config('global.host'))
+            {
+                //echo $request->host.' '.config('global.host');
+                return redirect()->route('connection')->with('success_message','Server is incorrect!');
+            }
+            else if($request->port != config('global.port'))
+            {
+                return redirect()->route('connection')->with('success_message','Port is incorrect!');
+            }
+            else if($request->db!= config('global.database'))
+            {
+                return redirect()->route('connection')->with('success_message','Database is incorrect!');
+            }
+            else
             return view('welcome');
         }
         else {
 
             if ($request->conn_type == 'wallet') {
                 try {
-                  $conn_string = 'tcps://'.$request->host1.':'.$request->port1.'/' . $request->service_name1 . '?wallet_location='.$request->wallet.'&retry_delay='.$request->delay.'';
-
-                    $conn = oci_connect($request->username, $request->password, $conn_string);
+                    App::before(function(Request $request) {
+                        App::singleton('conn', function () use ($request) {
+                            $conn_string = 'tcps://' . $request->host1 . ':' . $request->port1 . '/' . $request->service_name1 . '?wallet_location=' . $request->wallet . '&retry_delay=' . $request->delay . '';
+                            return oci_connect($request->username, $request->password, $conn_string);
+                        });
+                    });
+                 // $conn_string = 'tcps://'.$request->host1.':'.$request->port1.'/' . $request->service_name1 . '?wallet_location='.$request->wallet.'&retry_delay='.$request->delay.'';
+                    $conn=app('conn');
+                    //$conn = oci_connect($request->username, $request->password, $conn_string);
                     if (!$conn) {
                         $e = oci_error();
                         trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
