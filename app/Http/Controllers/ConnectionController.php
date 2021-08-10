@@ -65,15 +65,8 @@ class ConnectionController extends Controller
 
             if ($request->conn_type == 'wallet') {
                 try {
-                    App::before(function(Request $request) {
-                        App::singleton('conn', function () use ($request) {
-                            $conn_string = 'tcps://' . $request->host1 . ':' . $request->port1 . '/' . $request->service_name1 . '?wallet_location=' . $request->wallet . '&retry_delay=' . $request->delay . '';
-                            return oci_connect($request->username, $request->password, $conn_string);
-                        });
-                    });
-                 // $conn_string = 'tcps://'.$request->host1.':'.$request->port1.'/' . $request->service_name1 . '?wallet_location='.$request->wallet.'&retry_delay='.$request->delay.'';
-                    $conn=app('conn');
-                    //$conn = oci_connect($request->username, $request->password, $conn_string);
+                    $conn_string = 'tcps://'.$request->host1.':'.$request->port1.'/' . $request->service_name1 . '?wallet_location='.$request->wallet.'&retry_delay='.$request->delay.'';
+                    $conn = oci_connect($request->username, $request->password, $conn_string);
                     if (!$conn) {
                         $e = oci_error();
                         trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);

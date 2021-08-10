@@ -56,28 +56,37 @@ class OracleController extends Controller
     {
         $data1 = '';
         $data2 = '';
+        $dataNames = '';
         $conn = connection();
         $stid = oci_parse($conn, "select count(*) total from demo_projects p join demo_tasks  t on p.id = t.project_id where is_complete_yn='Y' group by p.name order by p.name asc");
         oci_execute($stid);
 
         //loop through the returned data
         while ($row = oci_fetch_object($stid)) {
-            $data1 = $data1 . '"'. $row->TOTAL.'",';
+            $data1 = $data1 . ''. $row->TOTAL.',';
         }
         $st = oci_parse($conn, "select count(*) total from demo_projects p join demo_tasks  t on p.id = t.project_id where is_complete_yn='N' group by p.name order by p.name asc ");
         oci_execute($st);
         while ($row = oci_fetch_object($st)) {
-            $data2 = $data2 . '"'. $row->TOTAL.'",';
+            $data2 = $data2 . ''. $row->TOTAL.',';
         }
         $name = oci_parse($conn, "select name from demo_projects");
         oci_execute($name);
+        $name2 = oci_parse($conn, "select name from demo_projects");
+        oci_execute($name2);
+
+        while ($row = oci_fetch_object($name2)) {
+            $dataNames = $dataNames . '"'. $row->NAME.'",';
+        }
 
         $data1 = trim($data1,",");
         $data2 = trim($data2,",");
-        //echo $data1;
-       // echo $data2;
+        $dataNames = trim($dataNames,",");
+       // echo $data1;
+      // echo $data2;
+       //echo $dataNames;
 
-        return view('oracle.chart',compact(['data1','data2','name','conn']));
+        return view('oracle.chart',compact(['data1','data2','dataNames','conn','name']));
     }
     public function projects()
     {

@@ -12,7 +12,8 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Configure APEX Environment","Develop Partner Portal POC","Develop Production Partner Portal", "Migrate .Net Applications","Train Developers on Application Express"],
+               // labels: ["Configure APEX Environment","Develop Partner Portal POC","Develop Production Partner Portal", "Migrate .Net Applications","Train Developers on Application Express"],
+                labels:  [<?php echo $dataNames; ?>],
                 datasets:
                     [{
                         label: 'Completed',

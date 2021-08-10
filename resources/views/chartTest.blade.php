@@ -12,9 +12,10 @@
     			var myChart = new Chart(ctx, {
         		type: 'bar',
 		        data: {
-		            labels: ["Configure APEX Environment","Train Developers on Application Express"],
-                    //labels: [{{$projects}}],
-                    datasets: 
+
+		            //labels: ["Configure APEX Environment","Train Developers on Application Express"],
+                    labels: [<?php echo $projects; ?>],
+                    datasets:
 		            [{
 		                label: 'Completed',
 		                data: [{{$data1}}],
@@ -28,9 +29,9 @@
 		                data: [{{$data2}}],
 		                backgroundColor: 'transparent',
 		                borderColor:'rgba(0,255,255)',
-		                borderWidth: 3	
+		                borderWidth: 3
 		            }]
-		        },                   
+		        },
 		        options: {
 		            scales: {scales:{yAxes: [{beginAtZero: true}], xAxes: [{beginAtZero: true, maxTicketsLimit: 20, stacked: true}]}},
 		            tooltips:{mode: 'index'},
@@ -59,9 +60,9 @@
             </thead>
             <tbody>
                 @foreach($prj as $p)
-                <tr>                
+                <tr>
                     <td>{{$p->name}}</td>
-                    <td> 
+                    <td>
                     <ul>
                     @foreach(\App\Models\Task::where('project_id',$p->id)->get() as $n)
                         <li> {{$n->name}}</li>
@@ -74,7 +75,7 @@
                         <li> {{$n->end_date}}</li>
                         @endforeach
                         </ul>
-                    </td>                  
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

@@ -25,13 +25,13 @@ class ChartController extends Controller
             $data2 = $data2 .''.$value.',';
         }
         foreach ($prj as $value) {
-          $projects = $projects .''.$value->name.',';
+          $projects = $projects .'"'.$value->name.'",';
         }
-        $data1 = trim($data1,",");      
+        $data1 = trim($data1,",");
         $data2 = trim($data2,",");
         $projects = trim($projects,",");
         //echo $projects;
-     
+
       return view('chartTest',compact(['data1','data2','prj','projects']));
    }
 public function test()
@@ -49,11 +49,11 @@ public function test()
         foreach ($totalN as $key => $value) {
             $data2 = $data2 .''.$value.',';
         }
-       echo $data1 = trim($data1,",");      
+       echo $data1 = trim($data1,",");
       echo  $data2 = trim($data2,",");
 
     ///////////-----------------
-    $projects=Project::pluck('name'); 
+    $projects=Project::pluck('name');
    //echo retunrTotalY($projects[0]),retunrTotalN($projects[0]);
  //  echo($projects);
 
@@ -68,7 +68,7 @@ public function test()
     $tasksN=Project::from ('demo_projects as p')
     ->join('demo_tasks  as t','p.id','=','t.project_id')
     ->select('p.name', DB::raw('count(t.id) as total'))
-    ->where('is_complete_yn','=','N')      
+    ->where('is_complete_yn','=','N')
     ->groupBy('p.name')
     ->pluck('count(t.id) as total');
     //echo $nrN=Task::where(['project_id'=>1,'is_complete_yn'=>'Y'])->count();
@@ -79,7 +79,7 @@ public function test()
      $tasksY=Project::from ('demo_projects as p')
     ->join('demo_tasks  as t','p.id','=','t.project_id')
     ->select(DB::raw('count(t.id) as total'))
-    ->where('is_complete_yn','=','Y')      
+    ->where('is_complete_yn','=','Y')
     ->groupBy('p.name')
      ->pluck('count(t.id) as total');
 
