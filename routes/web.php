@@ -30,6 +30,9 @@ Route::match(array('get','post'),'/worksheet-mysql','DataController@worksheet')-
 Route::get('/object-browser','OracleController@obiectBrowse')->name('obiect.browser');
 Route::get('/insert','StatmentController@insertRowsPrj1')->name('insert');
 Route::get('/insert2','StatmentController@insertRowsMilestone')->name('insertPrj2');
+//Oracle calendar
+Route::get('/project-tasks-calendar','OracleController@index')->name('index');
+Route::get('/calendar-data','OracleController@index');
 //calendar test
 Route::get('/full-calender','CalendarController@index')->name('calendar');
 Route::post('/full-calender/action','CalendarController@action');

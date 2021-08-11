@@ -35,13 +35,13 @@
     <script>
         //readonly labels
         function Open() {
-            document.getElementById('service_name').readOnly = false;
-            document.getElementById('sid_t').readOnly = true;
+            document.getElementById('service_name').readOnly = true;
+            document.getElementById('sid_t').readOnly = false;
         }
         function Open1()
         {
-            document.getElementById('sid_t').readOnly = false;
-            document.getElementById('service_name').readOnly = true;
+            document.getElementById('sid_t').readOnly = true;
+            document.getElementById('service_name').readOnly = false;
         }
     </script>
 
@@ -195,7 +195,7 @@
                         <input name="sid" class="form-control" id="sid_t" placeholder="xe" type="text">
                     </div> <!-- form-group// -->
                     <div class="form-group my-1">
-                        <input name="service_name2" class="form-control" id="serice_name" placeholder="" type="text">
+                        <input name="service_name2" class="form-control" id="service_name" placeholder="" type="text" readonly>
                     </div> <!-- form-group// -->
                 </div>
             </div> <!-- form-conn// -->

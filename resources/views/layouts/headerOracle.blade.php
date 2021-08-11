@@ -75,11 +75,11 @@
                                     <li><a class="dropdown-item text-primary" href="{{route('milestones.o')}}"> Milestones </a></li>
                                 </ul>
                             </li>
+{{--                            <li class="nav-item">--}}
+{{--                                <a  class="nav-link" href="{{route('crud')}}" class="btn btn-primary btn-block"> CRUD </a>--}}
+{{--                            </li>--}}
                             <li class="nav-item">
-                                <a  class="nav-link" href="{{route('crud')}}" class="btn btn-primary btn-block"> CRUD </a>
-                            </li>
-                            <li class="nav-item">
-                                <a  class="nav-link" href="{{route('calendar')}}" class="btn btn-primary btn-block"> Calendar </a>
+                                <a  class="nav-link" href="{{route('index')}}" class="btn btn-primary btn-block"> Calendar </a>
                             </li>
                             <li class="nav-item">
                                 <a  class="nav-link" href="{{route('connection')}}" class="btn btn-primary btn-block"> DB connection </a>

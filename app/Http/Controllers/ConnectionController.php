@@ -11,29 +11,15 @@ use App;
 
 class ConnectionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        // $stid = oci_parse(setConn(), 'SELECT * FROM test');
-        // oci_execute($stid);
-
-        // echo "<table border='1'>\n";
-        // while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-        //     echo "<tr>\n";
-        //     foreach ($row as $item) {
-        //         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
-        //     }
-        //     echo "</tr>\n";
-        // }
-        // echo "</table>\n";
-
-      // echo  DB::table('test')->get();
-
-            return view('connection');
-
+        return view('connection');
     }
     public function set(Request $request){
+        $request->session()->flush();
         //$validatedData = $request->validated();
+        $request->session()->put('username',$request->username);
+        $name=session('username');
         $username=$request->username;
         if($request->db_type =='mysql')
         {
@@ -65,8 +51,15 @@ class ConnectionController extends Controller
 
             if ($request->conn_type == 'wallet') {
                 try {
-                    $conn_string = 'tcps://'.$request->host1.':'.$request->port1.'/' . $request->service_name1 . '?wallet_location='.$request->wallet.'&retry_delay='.$request->delay.'';
-                    $conn = oci_connect($request->username, $request->password, $conn_string);
+                    //store username&ass in sesion
+                    $request->session()->put('password',$request->password);
+
+                   // $conn_string = 'tcps://'.$request->host1.':'.$request->port1.'/' . $request->service_name1 . '?wallet_location='.$request->wallet.'&retry_delay='.$request->delay.'';
+                    //$conn = oci_connect($request->username, $request->password, $conn_string);
+                  // $request->session()->put('conn','oci_connect('.$request->username.','.$request->password.','.'tcps://'.$request->host1.':'.$request->port1.'/' . $request->service_name1 . '?wallet_location='.$request->wallet.'&retry_delay='.$request->delay.')');
+                   $request->session()->put('conn_string','tcps://'.$request->host1.':'.$request->port1.'/' . $request->service_name1 . '?wallet_location='.$request->wallet.'&retry_delay='.$request->delay.'');
+                    $conn = oci_connect(session('username'),session('password'),session('conn_string'));
+                    //echo $conn;
                     if (!$conn) {
                         $e = oci_error();
                         trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
@@ -74,7 +67,7 @@ class ConnectionController extends Controller
                         $stid = oci_parse($conn, 'SELECT table_name FROM USER_TABLES');
                         oci_execute($stid);
 
-                        return view('data', compact(['conn', 'stid']));
+                        return view('data', compact(['conn', 'stid','name']));
                     }
 
                     //$stid = oci_parse($conn, 'SELECT * FROM test');
@@ -82,24 +75,47 @@ class ConnectionController extends Controller
                     return back()->withError($e->getMessage())->withInput();
                 }
             } else if ($request->conn_type == 'basic') {
-                try {
-                    $conn_string = 'tcps://' . $request->host . ':' . $request->port . '/' . $request->service_name2 . '?wallet_location=/instantclient_19_11/network/admin&retry_delay=3';
+                //store username&[ass in sesion
+                $request->session()->put('password',$request->password);
 
-                    $conn = oci_connect($request->username, $request->password, $conn_string);
-                    if (!$conn) {
-                        $e = oci_error();
-                        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-                    } else {
-                        $stid = oci_parse($conn, 'SELECT table_name FROM USER_TABLES');
-                        oci_execute($stid);
-
-                        return view('data', compact(['conn', 'stid']));
+                if($request->typecheck =='sid')
+                {
+                    try {
+                        $request->session()->put('conn_string','//' . $request->host . ':' . $request->port . '/' . $request->sid .'');
+                       // $conn = oci_connect($request->username, $request->password,  '//' . $request->host . ':' . $request->port . '/' . $request->sid .'');
+                        $conn = oci_connect(session('username'),session('password'),session('conn_string'));
+                        if (!$conn) {
+                            $e = oci_error();
+                            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+                        } else {
+                            $stid = oci_parse($conn, 'SELECT table_name FROM USER_TABLES');
+                            oci_execute($stid);
+                            return view('data', compact(['conn', 'stid','name']));
+                        }
+                    } catch (\Prophecy\Exception\Exception $e) {
+                        return back()->withError($e->getMessage())->withInput();
                     }
-
-                    //$stid = oci_parse($conn, 'SELECT * FROM test');
-                } catch (\Prophecy\Exception\Exception $e) {
-                    return back()->withError($e->getMessage())->withInput();
                 }
+                else{
+                    try {
+                        $request->session()->put('conn_string','//' . $request->host . ':' . $request->port . '/' . $request->service_name2 .'');
+                        // $conn = oci_connect($request->username, $request->password,  '//' . $request->host . ':' . $request->port . '/' . $request->sid .'');
+                       // $conn = oci_connect($request->username, $request->password,  '//' . $request->host . ':' . $request->port . '/' . $request->service_name2 .'');
+                        $conn = oci_connect(session('username'),session('password'),session('conn_string'));
+                        if (!$conn) {
+                            $e = oci_error();
+                            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+                        } else {
+                            $stid = oci_parse($conn, 'SELECT table_name FROM USER_TABLES');
+                            oci_execute($stid);
+
+                            return view('data', compact(['conn', 'stid','name']));
+                        }
+                    } catch (\Prophecy\Exception\Exception $e) {
+                        return back()->withError($e->getMessage())->withInput();
+                    }
+                }
+
             }
         }
 
