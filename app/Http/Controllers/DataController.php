@@ -122,22 +122,45 @@ class DataController extends Controller
             $query='';
             $data=null;
             $columns=null;
-
-            return view('sqlWork',compact('data','query','columns'));
+            $count=null;
+            return view('sqlWork',compact('data','query','columns','count'));
         }
         else if($request->isMethod('post')) {
 
-            $query=$request->code;
-            $data= DB::select(DB::raw($request->code));
+            $string=$request->code;
+            $result = explode(" ", $string, 2);
+            $uppCase=mb_convert_case($result[0], MB_CASE_UPPER, "UTF-8");
+            if($uppCase == 'INSERT'|| $uppCase == 'DELETE')
+            {
+                try {
+                    $query=$request->code;
+                    $data= DB::select(DB::raw($request->code));
+                    $columns=null;
+                    $count=1;
+                    return view('sqlWork',compact('data','query','columns','count'));
+                }
+                catch (Illuminate\Database\QueryException $e)
+                {
+                    return redirect()->route('exceptions')->with('error',$e);
+                }
 
-            //get columns
-            $db = DB::connection()->getPdo();
-            $rs = $db->query($request->code);
-            for ($i = 0; $i < $rs->columnCount(); $i++) {
-                $col = $rs->getColumnMeta($i);
-                $columns[] = $col['name'];
             }
-            return view('sqlWork',compact('data','query','columns'));
+            else if($uppCase == 'SELECT') {
+                $query=$request->code;
+                $data= DB::select(DB::raw($request->code));
+
+               // get columns
+                $db = DB::connection()->getPdo();
+                $rs = $db->query($request->code);
+                $count = $rs->rowCount();
+                for ($i = 0; $i < $rs->columnCount(); $i++) {
+                    $col = $rs->getColumnMeta($i);
+                    $columns[] = $col['name'];
+                }
+
+                return view('sqlWork',compact('data','query','columns','count'));
+            }
+
         }
 
 

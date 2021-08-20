@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.headerMySql')
 @section('content')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <div class="container my-2">

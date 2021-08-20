@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.headerMySql')
 @section('content')
 <!-- ========================= SECTION INTRO ========================= -->
 <section id="intro" class="intro bg-secondary pt-2">

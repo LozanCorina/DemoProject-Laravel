@@ -15,79 +15,34 @@ class ChartController extends Controller
         $data1 = '';
         $data2 = '';
         $projects='';
-        $totalY=retunrTotalY();
-        $totalN=retunrTotalN();
-
-        foreach ($totalY as $key => $value) {
-            $data1 = $data1 .''.$value.',';
-        }
-        foreach ($totalN as $key => $value) {
-            $data2 = $data2 .''.$value.',';
-        }
-        foreach ($prj as $value) {
-          $projects = $projects .'"'.$value->name.'",';
-        }
-        $data1 = trim($data1,",");
-        $data2 = trim($data2,",");
-        $projects = trim($projects,",");
-        //echo $projects;
-
+        $statment="select  p.name as label
+                                , (select count('x') from demo_tasks t
+                                   where p.id = t.project_id
+       and nvl(t.is_complete_yn,'N') = 'Y'
+                                  ) as complete
+                                , (select count('x') from demo_tasks t
+                                   where p.id = t.project_id
+       and nvl(t.is_complete_yn,'N') = 'N'
+                                  ) as incomplete
+                                from demo_projects p
+                                order by p.created_at desc";
+       $data= DB::select(DB::raw($statment));
+       foreach ($data as $row) {
+           $data1 = $data1 .''.$row->complete.',';
+           $data2 = $data2 .''.$row->incomplete.',';
+           $projects = $projects .'"'.$row->label.'",';
+       }
       return view('chartTest',compact(['data1','data2','prj','projects']));
    }
-public function test()
-{
-
-    //--------------------
-        $data1 = '';
-        $data2 = '';
-        $totalY=retunrTotalY();
-        $totalN=retunrTotalN();
-
-        foreach ($totalY as $key => $value) {
-            $data1 = $data1 .''.$value.',';
+    public function test()
+    {
+        $data= DB::select(DB::raw('SHOW TABLES'));
+        foreach ($data as $d)
+        {
+            foreach ($d as $item)
+            {
+                echo $item;
+            }
         }
-        foreach ($totalN as $key => $value) {
-            $data2 = $data2 .''.$value.',';
-        }
-       echo $data1 = trim($data1,",");
-      echo  $data2 = trim($data2,",");
-
-    ///////////-----------------
-    $projects=Project::pluck('name');
-   //echo retunrTotalY($projects[0]),retunrTotalN($projects[0]);
- //  echo($projects);
-
-// echo $projects;
-    // $proj_name=array();
-    // foreach($projects as $key =>$value)
-    // {
-    //     $proj_name[$key]=$value;
-    // }
-    //echo $projects[0];
-   //echo $id=Project::where('name','Configure APEX Environment')->value('id');
-    $tasksN=Project::from ('demo_projects as p')
-    ->join('demo_tasks  as t','p.id','=','t.project_id')
-    ->select('p.name', DB::raw('count(t.id) as total'))
-    ->where('is_complete_yn','=','N')
-    ->groupBy('p.name')
-    ->pluck('count(t.id) as total');
-    //echo $nrN=Task::where(['project_id'=>1,'is_complete_yn'=>'Y'])->count();
-    //  foreach($tasksN as $n)
-    //     {
-    //         echo $n->name.'<br>';
-    //     }
-     $tasksY=Project::from ('demo_projects as p')
-    ->join('demo_tasks  as t','p.id','=','t.project_id')
-    ->select(DB::raw('count(t.id) as total'))
-    ->where('is_complete_yn','=','Y')
-    ->groupBy('p.name')
-     ->pluck('count(t.id) as total');
-
-   // echo  $tasksN.'<br>'. $tasksY;
-  // echo $tasksY;
-    // foreach($tasksY as $n)
-    //     {
-    //         echo $n->name.'->'.$n->total.'<br>';
-    //     }
-}
+    }
 }

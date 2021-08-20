@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.headerMySql')
 
 @section('content')
 @if ($errors->any())
@@ -11,15 +11,15 @@
                     </ul>
                 </div>
         </div>
-            @endif 
-        @if($message=Session::get('success_message'))   
+            @endif
+        @if($message=Session::get('success_message'))
             <div class="col-3  mx-auto my-2">
                 <div class="alert alert-success alert-block">
                         <button type="button" class="close" data-dismiss="alert">x</button>
                         <strong>{{$message}}</strong>
-                </div>  
-            </div>         
-            @endif    
+                </div>
+            </div>
+            @endif
       <div class="container p-3">
         <table class="table table-striped">
         <thead>
@@ -47,21 +47,21 @@
             <td>{{$p->is_complete_yn}}</td>
             <td>{{$p->start_date}}</td>
             <td>{{$p->end_date}}</td>
-            <td> 
-                <form method="POST" action="{{route('task.destroy',$p->id)}}"> 
-                @csrf                              
+            <td>
+                <form method="POST" action="{{route('task.destroy',$p->id)}}">
+                @csrf
                 <button type="submit" onclick="return confirm('Are you sure to delete this item?')" class="btn btn-outline-danger" data-original-title="Delete item" data-toggle="tooltip" style="width:112px;"> × Delete</button>
                 </form>
             </td>
-            <td> 
-                <form method="POST" action="{{route('update',['model'=>'Task'])}}"> 
-                @csrf   
-                <input type="hidden"  name="id" value="{{$p->id}}">                           
+            <td>
+                <form method="POST" action="{{route('update',['model'=>'Task'])}}">
+                @csrf
+                <input type="hidden"  name="id" value="{{$p->id}}">
                 <button type="submit" class="btn btn-outline-success" data-original-title="Update item" data-toggle="tooltip" style="width:112px;"> ! Update</button>
                 </form>
             </td>
             </tr>
-            @endforeach   
+            @endforeach
         </tbody>
         </table>
         <a href="{{route('home')}}" type="button" class="btn btn-primary btn-block my-3"> Back</a>

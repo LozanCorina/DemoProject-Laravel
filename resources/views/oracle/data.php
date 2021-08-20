@@ -1,10 +1,10 @@
 <?php
 
-$conn = oci_connect(session('username'),session('password'),session('conn_string'));
+$conn = oci_connect('test', 'test', '//93.115.136.18:4024/clouddev.world');
 
 $data = array();
 $stid = oci_parse($conn, 'SELECT * FROM demo_tasks ORDER BY id');
-oci_execute($stid);
+$result =oci_execute($stid);
 
 while ($row = oci_fetch_object($stid)) {
     $data[] = array(
@@ -16,4 +16,5 @@ while ($row = oci_fetch_object($stid)) {
 }
 
 echo json_encode($data);
+
 ?>

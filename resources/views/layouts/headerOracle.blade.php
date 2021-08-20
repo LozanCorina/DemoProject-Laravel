@@ -94,10 +94,21 @@
                                    <li> <a  class="dropdown-item text-primary" href="{{route('obiect.browser')}}" class="btn btn-primary btn-block">object browser </a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">  MODE </a>
+                                <ul class="dropdown-menu">
+                                    <li> <a  class="dropdown-item text-primary" href="" class="btn btn-primary btn-block">IMPORT </a></li>
+                                    <li> <a  class="dropdown-item text-primary" href="{{route('export.oracle')}}" class="btn btn-primary btn-block">EXPORT </a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a  class="nav-link" href="{{route('anexa')}}" class="btn btn-primary btn-block"> Anexa </a>
+                            </li>
                         </ul>
                     </div>
-
                 </div>
+
+
             </div>
         </div>
     </nav>

@@ -94,6 +94,13 @@
                                 <li> <a  class="dropdown-item text-primary" href="{{route('worksheet.sql')}}" class="btn btn-primary btn-block">worksheet </a></li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">  MODE </a>
+                            <ul class="dropdown-menu">
+                                <li> <a  class="dropdown-item text-primary" href="" class="btn btn-primary btn-block">IMPORT </a></li>
+                                <li> <a  class="dropdown-item text-primary" href="{{route('export.mysql')}}" class="btn btn-primary btn-block">EXPORT </a></li>
+                            </ul>
+                        </li>
 					</ul>
 				</div>
 

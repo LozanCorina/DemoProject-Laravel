@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.headerMySql')
 
 @section('content')
 @if ($errors->any())

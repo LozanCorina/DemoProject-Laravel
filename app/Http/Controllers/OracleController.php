@@ -8,44 +8,46 @@ use PDO;
 
 class OracleController extends Controller
 {
-    public function index(Request $request){
-//        $conn = oci_connect(session('username'),session('password'),session('conn_string'));
-//
-//        $data = array();
-//        $stid = oci_parse($conn, 'SELECT * FROM demo_tasks ORDER BY id');
-//        oci_execute($stid);
-//        oci_fetch_all($stid, $result);
-//
-//        foreach($result as $row)
-//        {
-//            $data[] = array(
-//                'id'   => $row["ID"],
-//                'title'   => $row["NAME"],
-//                'start'   => $row["START_DATE"],
-//                'end'   => $row["END_DATE"]
-//            );
-//        }
-//
-//        echo json_encode($data);
+    public function index(Request $request)
+    {
+
+        if (request()->ajax()) {
+            $conn = oci_connect(session('username'), session('password'), session('conn_string'));
+            $data = array();
+            $stid = oci_parse($conn, 'SELECT * FROM demo_tasks ORDER BY id');
+            $result = oci_execute($stid);
+
+            while ($row = oci_fetch_object($stid)) {
+                $data[] = array(
+                    'id' => $row->ID,
+                    'title' => $row->NAME,
+                    'start' => $row->START_DATE,
+                    'end' => $row->END_DATE
+                );
+            }
+
+            return response()->json($data);
+        }
+
         return view('oracle.calendar');
     }
-    public function calendar()
+
+    public function calendar(Request $request)
     {
-        $conn = oci_connect(session('username'),session('password'),session('conn_string'));
-
-        $data = array();
-        $stid = oci_parse($conn, 'SELECT * FROM demo_tasks ORDER BY id');
-        oci_execute($stid);
-
-        while ($row = oci_fetch_object($stid)) {
-            $data[] = array(
-                'id'   => $row->ID,
-                'title'   => $row->NAME,
-                'start'   => $row->START_DATE,
-                'end'   => $row->END_DATE
-            );
+        if ($request->ajax()) {
+            $conn = oci_connect(session('username'), session('password'), session('conn_string'));
+            if ($request->type == 'update'){
+                $stid = oci_parse($conn, "Update demo_tasks set name='" . $request->title . "', start_date=to_date('" . $request->start_date . "','YYYY-MM-DD'), end_date=to_date('" . $request->end_date . "','YYYY-MM-DD') where id=" . $request->id);
+                oci_execute($stid);
+                return redirect()->route('index');
+            }
+            else if ($request->type == 'delete') {
+                $stid = oci_parse($conn, 'Delete from demo_projects where id=' . $request->id);
+                oci_execute($stid);
+                return redirect()->route('index');
+            }
         }
-        echo json_encode($data);
+
     }
     public function worksheet(Request $request){
         if($request->isMethod('get'))
@@ -93,35 +95,33 @@ class OracleController extends Controller
         $data1 = '';
         $data2 = '';
         $dataNames = '';
-
         $conn = oci_connect(session('username'),session('password'),session('conn_string'));
-        $stid = oci_parse($conn, "select count(*) total from demo_projects p join demo_tasks  t on p.id = t.project_id where is_complete_yn='Y' group by p.name order by p.name asc");
+        $stid=oci_parse($conn, "select  p.id
+                                , p.name as label
+                                , (select count('x') from demo_tasks t
+                                   where p.id = t.project_id
+                                   and nvl(t.is_complete_yn,'N') = 'Y'
+                                  ) as complete
+                                , (select count('x') from demo_tasks t
+                                   where p.id = t.project_id
+                                   and nvl(t.is_complete_yn,'N') = 'N'
+                                  ) as incomplete
+                                from demo_projects p
+                                order by p.created desc");
         oci_execute($stid);
 
         //loop through the returned data
         while ($row = oci_fetch_object($stid)) {
-            $data1 = $data1 . ''. $row->TOTAL.',';
+            $data1 = $data1 . ''. $row->COMPLETE.',';
+            $dataNames = $dataNames . '"'. $row->LABEL.'",';
+            $data2 = $data2 . ''. $row->INCOMPLETE.',';
         }
-        $st = oci_parse($conn, "select count(*) total from demo_projects p join demo_tasks  t on p.id = t.project_id where is_complete_yn='N' group by p.name order by p.name asc ");
-        oci_execute($st);
-        while ($row = oci_fetch_object($st)) {
-            $data2 = $data2 . ''. $row->TOTAL.',';
-        }
-        $name = oci_parse($conn, "select name from demo_projects");
+       $name = oci_parse($conn, "select name from demo_projects");
         oci_execute($name);
-        $name2 = oci_parse($conn, "select name from demo_projects");
-        oci_execute($name2);
-
-        while ($row = oci_fetch_object($name2)) {
-            $dataNames = $dataNames . '"'. $row->NAME.'",';
-        }
 
         $data1 = trim($data1,",");
         $data2 = trim($data2,",");
         $dataNames = trim($dataNames,",");
-       // echo $data1;
-      // echo $data2;
-      // echo $dataNames;
 
         return view('oracle.chart',compact(['data1','data2','dataNames','conn','name']));
     }

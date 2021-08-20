@@ -17,12 +17,39 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/exception', function () {
+    return view('exceptions');
+})->name('exceptions');
+//exp oracle
+Route::get('/exception-oracle', function () {
+    return view('oracle.exceptions');
+})->name('exceptions.oracle');
+
+Route::get('/anexa-oracle', function () {
+    return view('oracle.anexa');
+})->name('anexa');
+
 
 Route::get('/connection','ConnectionController@index')->name('connection');
 Route::post('/set-conn','ConnectionController@set')->name('set.conn');
 Route::get('/test','ChartController@test');
 Route::get('/chart','ChartController@index');
 Route::get('/chartOracle','OracleController@chart');
+//export
+Route::get('/export-oracle', function () {
+    return view('oracle.exportcsv');
+})->name('export.oracle');
+Route::get('/export-mysql', function () {
+    return view('exportcsv');
+})->name('export.mysql');
+
+Route::post('/export-csv-oracle-action','ExportImportController@exportCsvOracle')->name('exportcsv.oracle.action');
+Route::post('/export-csv-mysql-action','ExportImportController@exportCsvMysql')->name('exportcsv.mysql.action');
+Route::post('/export-mysql-action','ExportImportController@exportMysql')->name('export_sql.action');
+//banca
+Route::post('/banca','BancaController@execute');
+//storage download files
+Route::get('/download/{file}', 'BancaController@getFile')->name('getfile');
 //oracle worksheet
 Route::match(array('get','post'),'/worksheet','OracleController@worksheet')->name('worksheet');
 //mysql worksheet
@@ -31,13 +58,13 @@ Route::get('/object-browser','OracleController@obiectBrowse')->name('obiect.brow
 Route::get('/insert','StatmentController@insertRowsPrj1')->name('insert');
 Route::get('/insert2','StatmentController@insertRowsMilestone')->name('insertPrj2');
 //Oracle calendar
-Route::get('/project-tasks-calendar','OracleController@index')->name('index');
-Route::get('/calendar-data','OracleController@index');
-//calendar test
+Route::get('/calendar-data','OracleController@index')->name('index');
+Route::get('/modify-calendar','OracleController@calendar');
+//calendar test bun
 Route::get('/full-calender','CalendarController@index')->name('calendar');
 Route::post('/full-calender/action','CalendarController@action');
 //cal demo data
-Route::get('/calendar','CalendarController@show');
+Route::get('/calendar','CalendarController@show');//nu e bun
 Route::post('/calendar/statment','CalendarController@statment');
 Route::get('/crud','DataController@index')->name('crud');
 //crud team

@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.headerMySql')
 @section('javascript')
 {!! $chart->renderChartJsLibrary() !!}
 {!! $chart->renderJs() !!}
@@ -30,9 +30,9 @@
             </thead>
             <tbody>
                 @foreach($prj as $p)
-                <tr>                
+                <tr>
                     <td>{{$p->name}}</td>
-                    <td> 
+                    <td>
                     <ul>
                     @foreach(\App\Models\Task::where('project_id',$p->id)->get() as $n)
                         <li> {{$n->name}}</li>
@@ -45,7 +45,7 @@
                         <li> {{$n->end_date}}</li>
                         @endforeach
                         </ul>
-                    </td>                  
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

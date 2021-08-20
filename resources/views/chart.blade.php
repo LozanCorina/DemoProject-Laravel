@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.headerMySql')
 @section('content')
 <!-- Chart's container -->
 <div class="container my-2">
@@ -11,23 +11,6 @@
 <script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
 <!-- Chartisan -->
 <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
-@php 
-        $data1 = '';
-        $data2 = '';
-       
-
-        $totalY=retunrTotalY();
-        $totalN=retunrTotalN();
-
-        foreach ($totalY as $key => $value) {
-            $data1 = $data1 .''.$value.',';
-        }
-        foreach ($totalN as $key => $value) {
-            $data2 = $data2 .''.$value.',';
-        }
-        $data1 = trim($data1,",");      
-        $data2 = trim($data2,",");
-@endphp
 <script>
       const chart = new Chartisan({
         el: '#chart',
@@ -36,7 +19,7 @@
         .colors(['#FFE666', '#150080','#E62600'])
         .responsive()
         .beginAtZero()
-        .legend({ position: 'right' ,              
+        .legend({ position: 'right' ,
                 font:  {size: 24}
                 }),
         type: 'bar',
@@ -70,9 +53,9 @@
             </thead>
             <tbody>
                 @foreach($prj as $p)
-                <tr>                
+                <tr>
                     <td>{{$p->name}}</td>
-                    <td> 
+                    <td>
                     <ul>
                     @foreach(\App\Models\Task::where('project_id',$p->id)->get() as $n)
                         <li> {{$n->name}}</li>
@@ -85,7 +68,7 @@
                         <li> {{$n->end_date}}</li>
                         @endforeach
                         </ul>
-                    </td>                  
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.headerMySql')
 @section('content')
     <script>
         function myF() {
@@ -52,7 +52,7 @@
                                 @endif
                             </tr>
                             </thead>
-                            <tbody>0
+                            <tbody>
                             @if($data != null)
                             @foreach($data as $d)
                                 <tr>
@@ -61,6 +61,11 @@
                                     @endforeach
                                 </tr>
                             @endforeach
+                            @endif
+                            @if($count != null)
+                            <tr>
+                                <td>{{$count}} rows was executed</td>
+                            </tr>
                             @endif
                             </tbody>
                         </table>
